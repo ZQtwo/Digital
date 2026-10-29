@@ -1,0 +1,144 @@
+/* =============================================================================
+   tokens.css —— 设计令牌层（唯一允许出现硬编码色值的地方）
+   方向：Retro-futuristic 硬件规格美学
+   暗色为默认主题（终端 / 示波器质感），亮色为暖纸白的“技术文档”质感。
+   组件与页面代码一律只使用语义变量，禁止自己写 hex。
+   ============================================================================= */
+
+:root {
+  /* --- 字体族 ------------------------------------------------------------- */
+  --font-display: "Chakra Petch", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "IBM Plex Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  /* --- 字阶（1.25 模块化比例） ------------------------------------------- */
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-md: 17px;
+  --fs-lg: 21px;
+  --fs-xl: 26px;
+  --fs-2xl: 33px;
+  --fs-3xl: 42px;
+  --fs-4xl: 58px;
+  --fs-5xl: 76px;
+
+  /* --- 间距梯度 ----------------------------------------------------------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 40px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+
+  /* --- 圆角（偏硬朗，配合发丝线边框） ------------------------------------ */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* --- 动效 --------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 640ms;
+
+  /* --- 布局 --------------------------------------------------------------- */
+  --container: 1280px;
+  --header-h: 64px;
+  --tabbar-h: 60px;
+  --z-header: 40;
+  --z-tabbar: 40;
+  --z-drawer: 60;
+  --z-toast: 80;
+}
+
+/* ============================ 暗色（默认） ================================= */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --c-bg: #08090c;
+  --c-bg-elev: #0d1015;
+  --c-surface: #12161d;
+  --c-surface-2: #191e27;
+  --c-surface-3: #232a35;
+  --c-text: #e9eef4;
+  --c-text-2: #b3bdcb;
+  --c-muted: #7b8697;
+  --c-border: rgba(233, 238, 244, 0.1);
+  --c-border-strong: rgba(233, 238, 244, 0.22);
+
+  /* 唯一强调色：琥珀磷光（价格 / 主行动点） */
+  --c-accent: #ffb03a;
+  --c-accent-text: #ffb03a;
+  --c-accent-ink: #1a1206;
+  --c-accent-soft: rgba(255, 176, 58, 0.14);
+  --c-accent-line: rgba(255, 176, 58, 0.42);
+
+  --c-success: #4ade80;
+  --c-danger: #ff5f56;
+  --c-info: #59c2ff;
+
+  --c-grid-line: rgba(233, 238, 244, 0.055);
+  --c-glow-1: rgba(255, 176, 58, 0.16);
+  --c-glow-2: rgba(89, 194, 255, 0.12);
+  --c-scrim: rgba(4, 5, 8, 0.72);
+
+  --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 28px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 24px 64px rgba(0, 0, 0, 0.62);
+  --shadow-accent: 0 8px 28px rgba(255, 176, 58, 0.18);
+
+  --art-bg-1: #161c26;
+  --art-bg-2: #0b0e13;
+  --art-ink: #dfe7f0;
+  --art-ink-dim: rgba(223, 231, 240, 0.32);
+}
+
+/* ============================== 亮色 ====================================== */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --c-bg: #f4f2ed;
+  --c-bg-elev: #fffefb;
+  --c-surface: #fffefb;
+  --c-surface-2: #f7f5f0;
+  --c-surface-3: #ebe7de;
+  --c-text: #14161a;
+  --c-text-2: #3b414c;
+  --c-muted: #6a7280;
+  --c-border: rgba(20, 22, 26, 0.13);
+  --c-border-strong: rgba(20, 22, 26, 0.3);
+
+  /* 亮色下强调色需加深，保证文字对比度 ≥ 4.5:1 */
+  --c-accent: #e08a00;
+  --c-accent-text: #8a5200;
+  --c-accent-ink: #fffefb;
+  --c-accent-soft: rgba(224, 138, 0, 0.13);
+  --c-accent-line: rgba(224, 138, 0, 0.5);
+
+  --c-success: #10794a;
+  --c-danger: #c0362c;
+  --c-info: #0b5fa5;
+
+  --c-grid-line: rgba(20, 22, 26, 0.06);
+  --c-glow-1: rgba(224, 138, 0, 0.16);
+  --c-glow-2: rgba(11, 95, 165, 0.1);
+  --c-scrim: rgba(20, 22, 26, 0.44);
+
+  --shadow-1: 0 2px 8px rgba(20, 22, 26, 0.07);
+  --shadow-2: 0 8px 28px rgba(20, 22, 26, 0.1);
+  --shadow-3: 0 24px 64px rgba(20, 22, 26, 0.16);
+  --shadow-accent: 0 8px 28px rgba(224, 138, 0, 0.24);
+
+  --art-bg-1: #e6e3db;
+  --art-bg-2: #f7f5f0;
+  --art-ink: #2a2e36;
+  --art-ink-dim: rgba(42, 46, 54, 0.26);
+}

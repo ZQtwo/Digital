@@ -1,0 +1,419 @@
+/* =============================================================================
+   layout.css —— 页面骨架：顶栏 / 底部导航 / 页脚 / 栅格 / 抽屉 / 分组
+   断点：默认移动优先，768px 起平板，1024px 起桌面
+   ============================================================================= */
+
+.app-shell {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1 0 auto;
+  /* 移动端给底部导航 + 固定跑马灯两层让位（含 iOS 安全区） */
+  padding-bottom: calc(var(--tabbar-h) * 2 + env(safe-area-inset-bottom, 0px));
+}
+
+/* ------------------------------- 顶栏 --------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: color-mix(in srgb, var(--c-bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.site-header__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  height: var(--header-h);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  flex: none;
+}
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--c-accent-line);
+  border-radius: var(--r-sm);
+  color: var(--c-accent);
+  background: var(--c-accent-soft);
+}
+.brand__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.brand__sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--c-muted);
+}
+
+/* 桌面主导航 */
+.site-nav {
+  display: none;
+  align-items: center;
+  gap: var(--sp-1);
+  margin-inline-start: var(--sp-5);
+}
+.site-nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-text-2);
+  border-radius: var(--r-sm);
+  transition: color var(--dur-fast) ease-out;
+}
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--sp-3);
+  bottom: 6px;
+  height: 1px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.site-nav__link:hover {
+  color: var(--c-text);
+}
+.site-nav__link:hover::after,
+.site-nav__link.is-active::after {
+  transform: scaleX(1);
+}
+.site-nav__link.is-active {
+  color: var(--c-accent-text);
+}
+
+/* 顶栏右侧动作区 */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-inline-start: auto;
+}
+
+/* 顶栏内联搜索：移动端折叠为图标 */
+.header-search {
+  display: none;
+  flex: 1 1 340px;
+  max-width: 420px;
+}
+
+/* ---------------------------- 移动端底部导航 --------------------------- */
+.tabbar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-tabbar);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--c-bg-elev) 90%, transparent);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--c-border);
+}
+.tabbar__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 44px;
+  font-size: 11px;
+  color: var(--c-muted);
+  transition: color var(--dur-fast) ease-out;
+}
+.tabbar__item.is-active {
+  color: var(--c-accent-text);
+}
+.tabbar__item.is-active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 26px;
+  height: 2px;
+  background: var(--c-accent);
+}
+.tabbar__badge {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  margin-left: 4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--c-accent);
+  color: var(--c-accent-ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ------------------------------- 页脚 --------------------------------- */
+.site-footer {
+  margin-top: var(--sp-8);
+  border-top: 1px solid var(--c-border);
+  background: var(--c-bg-elev);
+}
+.site-footer__grid {
+  display: grid;
+  gap: var(--sp-6);
+  padding: var(--sp-7) 0;
+}
+.site-footer__col h3 {
+  font-size: var(--fs-sm);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin-bottom: var(--sp-3);
+}
+.site-footer__col li {
+  font-size: var(--fs-sm);
+  color: var(--c-text-2);
+  padding: 3px 0;
+}
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-5);
+  justify-content: space-between;
+  padding: var(--sp-4) 0 var(--sp-6);
+  border-top: 1px solid var(--c-border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-muted);
+}
+
+/* ------------------------------ 区块与栅格 ---------------------------- */
+.section {
+  padding: var(--sp-7) 0;
+}
+.section--tight {
+  padding: var(--sp-6) 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+.section-head__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+/* 破格元素：标题左侧的强调竖条 */
+.section-head__title {
+  position: relative;
+  padding-left: var(--sp-4);
+}
+.section-head__title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 3px;
+  background: linear-gradient(180deg, var(--c-accent), transparent);
+}
+
+/* 商品栅格：移动 2 列 → 平板 3 列 → 桌面 4 列 */
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+/* 列表页：移动端单栏 + 抽屉筛选，桌面端固定侧栏 */
+.split-layout {
+  display: grid;
+  gap: var(--sp-6);
+  align-items: start;
+}
+.split-layout__aside {
+  display: none;
+}
+
+/* ------------------------------- 抽屉 --------------------------------- */
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+}
+.drawer__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--c-scrim);
+  backdrop-filter: blur(2px);
+  animation: fadeIn var(--dur-base) var(--ease-out);
+}
+.drawer__panel {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: min(88vw, 360px);
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg-elev);
+  border-right: 1px solid var(--c-border);
+  box-shadow: var(--shadow-3);
+  animation: slideFromLeft var(--dur-base) var(--ease-out);
+}
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-bottom: 1px solid var(--c-border);
+}
+.drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-4);
+  -webkit-overflow-scrolling: touch;
+}
+.drawer__foot {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-top: 1px solid var(--c-border);
+  background: var(--c-surface);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes slideFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+/* ------------------------- 移动端固定操作条 --------------------------- */
+.action-bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: color-mix(in srgb, var(--c-bg-elev) 94%, transparent);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--c-border);
+}
+
+/* ============================== 断点 ================================== */
+@media (min-width: 640px) {
+  .grid-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-5);
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 72px;
+  }
+  .container {
+    padding-inline: var(--sp-6);
+  }
+  .site-footer__grid {
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+  }
+  .header-search {
+    display: block;
+  }
+  .site-nav {
+    display: flex;
+  }
+  .section {
+    padding: var(--sp-8) 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .split-layout {
+    grid-template-columns: 264px minmax(0, 1fr);
+    gap: var(--sp-7);
+  }
+  .split-layout__aside {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-h) + var(--sp-5));
+    max-height: calc(100dvh - var(--header-h) - var(--sp-7));
+    overflow-y: auto;
+  }
+  /* 桌面端不再需要移动底部导航 */
+  .app-main {
+    padding-bottom: var(--tabbar-h);
+  }
+  .tabbar {
+    display: none;
+  }
+  .action-bar {
+    bottom: var(--tabbar-h);
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid-products {
+    gap: var(--sp-6);
+  }
+}
+
+/* ------------------------- 移动端跑马灯位置 -------------------------- */
+/* 移动端把固定跑马灯抬到 tabbar 上方，避免两者在同一 bottom:0 重叠 */
+@media (max-width: 1023.98px) {
+  .marquee {
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  }
+}

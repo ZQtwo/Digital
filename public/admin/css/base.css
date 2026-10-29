@@ -1,0 +1,288 @@
+/* =============================================================================
+   base.css —— 重置、排版基线、焦点与动效降级
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 中文正文行高与字距放宽，拉丁展示字收紧字距 —— 见 .display-* */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- 焦点可见性：2px 描边 + 2px 偏移，全站统一 ---------------------------- */
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+::selection {
+  background: var(--c-accent);
+  color: var(--c-accent-ink);
+}
+
+/* --- 滚动条 --------------------------------------------------------------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-surface-3) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--c-surface-3);
+  border-radius: var(--r-pill);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* --- 通用工具类 ----------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--sp-4);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--sp-4);
+  z-index: 100;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--c-accent);
+  color: var(--c-accent-ink);
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  transition: top var(--dur-fast) var(--ease-out);
+}
+.skip-link:focus {
+  top: var(--sp-3);
+}
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--c-border);
+  margin: 0;
+}
+
+/* --- 展示字排版档位 ------------------------------------------------------- */
+.display-1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 7vw, var(--fs-5xl));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.display-2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, var(--fs-2xl));
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+.display-3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.lede {
+  color: var(--c-text-2);
+  font-size: var(--fs-md);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+/* --- 氛围层：渐变网格 + 网格线 + 颗粒 ------------------------------------- */
+.atmosphere {
+  position: relative;
+  isolation: isolate;
+}
+.atmosphere::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(58rem 38rem at 8% -12%, var(--c-glow-1), transparent 62%),
+    radial-gradient(46rem 34rem at 104% 4%, var(--c-glow-2), transparent 58%);
+}
+.atmosphere::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+  background-image:
+    linear-gradient(to right, var(--c-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--c-grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 12%, transparent 78%);
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 12%, transparent 78%);
+}
+
+/* --- 入场编排：错峰上浮，3–6 组，间隔 60–120ms ---------------------------- */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+.reveal.is-in {
+  animation: riseIn var(--dur-slow) var(--ease-out) both;
+}
+.reveal.is-in[data-delay="1"] {
+  animation-delay: 70ms;
+}
+.reveal.is-in[data-delay="2"] {
+  animation-delay: 140ms;
+}
+.reveal.is-in[data-delay="3"] {
+  animation-delay: 210ms;
+}
+.reveal.is-in[data-delay="4"] {
+  animation-delay: 280ms;
+}
+.reveal.is-in[data-delay="5"] {
+  animation-delay: 350ms;
+}
+
+/* --- 页面切换过渡 --------------------------------------------------------- */
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* --- 动效降级：reduce 下关闭全部动画 -------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+  }
+}
